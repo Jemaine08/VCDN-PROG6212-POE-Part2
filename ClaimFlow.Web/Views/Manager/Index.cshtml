@@ -3,29 +3,37 @@
     Layout = "_Layout";
 }
 <h2>Academic Manager — Approvals</h2>
+
 @if (!Model.Any())
 {
     <div class="alert alert-info">No verified claims.</div>
 }
+
 @foreach (var c in Model)
 {
     <div class="card mb-3">
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div>
-                    <div><strong>@c.LecturerName</strong> — Verified by @c.CoordinatorName on @c.VerifiedAt?.ToLocalTime()</div>
+                    <div>
+                        <strong>@c.LecturerName</strong>
+                        — Verified by @c.CoordinatorName on @c.VerifiedAt?.ToLocalTime()
+                    </div>
                     <div>Total: <strong>R @c.Total.ToString("0.00")</strong></div>
+                    <div>Notes: @c.Notes</div>
                 </div>
-                <div>
-                    <form method="post" asp-action="Approve" class="d-inline">
+                <div class="text-end" style="min-width:240px">
+                    <form method="post" action="/Manager/Approve" class="d-inline w-100">
+                        @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@c.Id" />
                         <input class="form-control form-control-sm mb-1" name="managerName" placeholder="Manager name" />
-                        <button class="btn btn-sm btn-primary">Approve</button>
+                        <button type="submit" class="btn btn-sm btn-primary w-100">Approve</button>
                     </form>
-                    <form method="post" asp-action="Reject" class="d-inline">
+                    <form method="post" action="/Manager/Reject" class="d-inline w-100 mt-2">
+                        @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@c.Id" />
                         <input class="form-control form-control-sm mb-1" name="reason" placeholder="Reason" />
-                        <button class="btn btn-sm btn-outline-danger">Reject</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger w-100">Reject</button>
                     </form>
                 </div>
             </div>
