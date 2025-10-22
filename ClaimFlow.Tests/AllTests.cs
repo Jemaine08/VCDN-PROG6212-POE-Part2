@@ -3,6 +3,8 @@ using ClaimFlow.Web.Models;
 using ClaimFlow.Web.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using ClaimFlow.Web.Controllers;
+using ClaimFlow.Web.Models.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClaimFlow.Tests.TestHelpers;
 using ClaimFlow.Tests.Fakes;
