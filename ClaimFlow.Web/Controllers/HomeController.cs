@@ -1,32 +1,36 @@
-using System.Diagnostics;
 using ClaimFlow.Web.Models;
+using ClaimFlow.Web.Models.ViewModels;
+using ClaimFlow.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClaimFlow.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IClaimRepository _repo;
+        public HomeController(IClaimRepository repo) => _repo = repo;
 
-        public HomeController(ILogger<HomeController> logger)
+        [HttpGet("/")]
+        [HttpGet("/Home")]
+        [HttpGet("/Home/Index")]
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
-        }
+            var all = await _repo.GetAllAsync();
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+            var vm = new HomeVm
+            {
+                Total = all.Count,
+                Submitted = all.Count(c => c.Status == ClaimStatus.Submitted),
+                Verified = all.Count(c => c.Status == ClaimStatus.Verified),
+                Approved = all.Count(c => c.Status == ClaimStatus.Approved),
+                Rejected = all.Count(c => c.Status == ClaimStatus.Rejected),
+                Recent = all
+                    .OrderByDescending(c => c.CreatedAt)
+                    .Take(5)
+                    .ToList()
+            };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(vm);
         }
     }
 }
