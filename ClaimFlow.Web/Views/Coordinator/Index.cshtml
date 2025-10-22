@@ -1,0 +1,40 @@
+﻿@model List<ClaimFlow.Web.Models.Claim>
+@{
+    Layout = "_Layout";
+}
+<h2>Coordinator — Pending Verifications</h2>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No submitted claims.</div>
+}
+@foreach (var c in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div><strong>@c.LecturerName</strong> — @c.CreatedAt.ToLocalTime()</div>
+                    <div>Hours: @c.HoursWorked, Rate: R @c.HourlyRate.ToString("0.00"), <strong>Total: R @c.Total.ToString("0.00")</strong></div>
+                    <div>Notes: @c.Notes</div>
+                    <div>
+                        Docs: @foreach(var d in c.Documents){
+                        <span class="me-2">@d.OriginalFileName</span>
+                    }
+                </div>
+            </div>
+            <div>
+                <form method="post" asp-action="Verify" class="d-inline">
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <input class="form-control form-control-sm mb-1" name="coordinatorName" placeholder="Coordinator name" />
+                    <button class="btn btn-sm btn-success">Verify</button>
+                </form>
+                <form method="post" asp-action="Reject" class="d-inline">
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <input class="form-control form-control-sm mb-1" name="reason" placeholder="Reason" />
+                    <button class="btn btn-sm btn-danger">Reject</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,52 @@
+﻿@model ClaimFlow.Web.Models.ViewModels.ClaimCreateVm
+@{
+    Layout = "_Layout";
+}
+<h2>Submit Claim (Lecturer)</h2>
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="card p-3">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Lecturer Name</label>
+            <input asp-for="LecturerName" class="form-control" />
+            <span class="text-danger" asp-validation-for="LecturerName"></span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Hours Worked</label>
+            <input asp-for="HoursWorked" class="form-control" id="hours" />
+            <span class="text-danger" asp-validation-for="HoursWorked"></span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Hourly Rate (R)</label>
+            <input asp-for="HourlyRate" class="form-control" id="rate" />
+            <span class="text-danger" asp-validation-for="HourlyRate"></span>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Notes</label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Supporting Document (.pdf/.docx/.xlsx ≤ 5 MB)</label>
+            <input asp-for="Upload" type="file" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <div class="form-text">Auto-calculated total:</div>
+            <div class="h5" id="total">R 0.00</div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function calc(){
+          let h = parseFloat(document.getElementById('hours').value||0);
+          let r = parseFloat(document.getElementById('rate').value||0);
+          document.getElementById('total').innerText = 'R ' + (h*r).toFixed(2);
+        }
+        ['hours','rate'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+        calc();
+    </script>
+}
