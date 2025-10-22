@@ -18,6 +18,7 @@ namespace ClaimFlow.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Approve(Guid id, string managerName)
         {
             var claim = await _repo.GetAsync(id);
@@ -34,6 +35,7 @@ namespace ClaimFlow.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Reject(Guid id, string reason)
         {
             var claim = await _repo.GetAsync(id);
