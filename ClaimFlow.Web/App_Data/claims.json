@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "Id": "51012efe-9e63-4340-87ab-7ff4db61d427",
+    "LecturerName": "Wesley",
+    "HoursWorked": 2,
+    "HourlyRate": 200,
+    "Notes": "Hard Worker",
+    "Total": 400,
+    "Status": 0,
+    "CoordinatorName": null,
+    "VerifiedAt": null,
+    "ManagerName": null,
+    "ManagerId": null,
+    "ApprovedOrRejectedAt": null,
+    "Documents": [
+      {
+        "OriginalFileName": "PROG6212 Part 2 Checklist (1).pdf",
+        "EncryptedFileName": "ac6354d4ac62462b909331f77433e1c2.bin",
+        "SizeBytes": 118891,
+        "UploadedAt": "2025-10-22T12:40:47.5950152Z"
+      }
+    ],
+    "CreatedAt": "2025-10-22T12:40:47.5721803Z"
+  }
+]

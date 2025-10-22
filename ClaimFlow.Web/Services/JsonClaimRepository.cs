@@ -9,7 +9,11 @@ namespace ClaimFlow.Web.Services
         private readonly string _file;
         private static readonly SemaphoreSlim Gate = new(1, 1);
 
-        public class StorageOptions { public string ClaimsFile { get; set; } = "App_Data/claims.json"; }
+        public class StorageOptions
+        {
+            public string ClaimsFile { get; set; } = "App_Data/claims.json";
+        }
+
         public JsonClaimRepository(IOptionsMonitor<StorageOptions> opts)
         {
             _file = opts.CurrentValue.ClaimsFile;
@@ -18,19 +22,36 @@ namespace ClaimFlow.Web.Services
             if (!File.Exists(_file)) File.WriteAllText(_file, "[]");
         }
 
+        // ---------- private helpers: never acquire Gate inside these ----------
+        private async Task<List<Claim>> ReadFileAsync()
+        {
+            var json = await File.ReadAllTextAsync(_file);
+            return JsonSerializer.Deserialize<List<Claim>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }) ?? new List<Claim>();
+        }
+
+        private async Task WriteFileAsync(List<Claim> items)
+        {
+            var json = JsonSerializer.Serialize(items, new JsonSerializerOptions { WriteIndented = true });
+            await File.WriteAllTextAsync(_file, json);
+        }
+        // ---------------------------------------------------------------------
+
         public async Task<List<Claim>> GetAllAsync()
         {
             await Gate.WaitAsync();
             try
             {
-                var json = await File.ReadAllTextAsync(_file);
-                return JsonSerializer.Deserialize<List<Claim>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
+                return await ReadFileAsync();
             }
             finally { Gate.Release(); }
         }
 
         public async Task<Claim?> GetAsync(Guid id)
         {
+            // Optional: small perf shortcut to avoid copying the whole list
             var all = await GetAllAsync();
             return all.FirstOrDefault(c => c.Id == id);
         }
@@ -40,10 +61,9 @@ namespace ClaimFlow.Web.Services
             await Gate.WaitAsync();
             try
             {
-                var all = await GetAllAsync();
+                var all = await ReadFileAsync();
                 all.Add(claim);
-                var json = JsonSerializer.Serialize(all, new JsonSerializerOptions { WriteIndented = true });
-                await File.WriteAllTextAsync(_file, json);
+                await WriteFileAsync(all);
             }
             finally { Gate.Release(); }
         }
@@ -53,11 +73,10 @@ namespace ClaimFlow.Web.Services
             await Gate.WaitAsync();
             try
             {
-                var all = await GetAllAsync();
+                var all = await ReadFileAsync();
                 var idx = all.FindIndex(c => c.Id == claim.Id);
                 if (idx >= 0) all[idx] = claim;
-                var json = JsonSerializer.Serialize(all, new JsonSerializerOptions { WriteIndented = true });
-                await File.WriteAllTextAsync(_file, json);
+                await WriteFileAsync(all);
             }
             finally { Gate.Release(); }
         }

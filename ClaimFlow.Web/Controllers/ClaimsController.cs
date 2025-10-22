@@ -20,6 +20,7 @@ namespace ClaimFlow.Web.Controllers
         public IActionResult Create() => View(new ClaimCreateVm());
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClaimCreateVm vm)
         {
             if (!ModelState.IsValid)

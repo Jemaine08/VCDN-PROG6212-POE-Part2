@@ -4,6 +4,7 @@
 }
 <h2>Submit Claim (Lecturer)</h2>
 <form asp-action="Create" method="post" enctype="multipart/form-data" class="card p-3">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <div class="row g-3">
         <div class="col-md-6">
             <label class="form-label">Lecturer Name</label>
