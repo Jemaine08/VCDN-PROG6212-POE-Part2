@@ -21,5 +21,51 @@
       }
     ],
     "CreatedAt": "2025-10-22T12:40:47.5721803Z"
+  },
+  {
+    "Id": "a1ac3abb-3807-42cb-9e1f-b538ed86c23a",
+    "LecturerName": "Wesley",
+    "HoursWorked": 10,
+    "HourlyRate": 250,
+    "Notes": "He worked well with long hours ",
+    "Total": 2500,
+    "Status": 2,
+    "CoordinatorName": "Jemaine",
+    "VerifiedAt": "2025-10-22T17:20:59.8340109Z",
+    "ManagerName": "adrian",
+    "ManagerId": "c0de6bae-5b0a-4b8c-9a79-28aa7936b84a",
+    "ApprovedOrRejectedAt": "2025-10-22T17:21:13.1572914Z",
+    "Documents": [
+      {
+        "OriginalFileName": "PROG6212 Part 2 Checklist (1).pdf",
+        "EncryptedFileName": "4712286cf38a43a18cd825ed75a966cd.bin",
+        "SizeBytes": 118891,
+        "UploadedAt": "2025-10-22T17:20:31.4156488Z"
+      }
+    ],
+    "CreatedAt": "2025-10-22T17:20:31.3924274Z"
+  },
+  {
+    "Id": "49bb1c6b-db3f-42a1-bfa5-463526820d45",
+    "LecturerName": "Kay",
+    "HoursWorked": 20,
+    "HourlyRate": 200,
+    "Notes": "Good worker\n[Coordinator Rejection] was rude",
+    "Total": 4000,
+    "Status": 3,
+    "CoordinatorName": null,
+    "VerifiedAt": "2025-10-22T17:22:17.9051078Z",
+    "ManagerName": null,
+    "ManagerId": null,
+    "ApprovedOrRejectedAt": null,
+    "Documents": [
+      {
+        "OriginalFileName": "UnitTesting_MVC.pdf",
+        "EncryptedFileName": "efcc4684094346cd9d8b8b11b3750a78.bin",
+        "SizeBytes": 4472040,
+        "UploadedAt": "2025-10-22T17:21:57.1938664Z"
+      }
+    ],
+    "CreatedAt": "2025-10-22T17:21:57.1291123Z"
   }
 ]

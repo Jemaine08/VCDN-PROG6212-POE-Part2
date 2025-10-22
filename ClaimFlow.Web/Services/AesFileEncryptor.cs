@@ -1,4 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿// Reference: Microsoft Learn (2024) AES Class — System.Security.Cryptography.Aes
+// Available at: https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes
+// Used to implement AES encryption and decryption for file uploads in the ClaimsController.
+
+using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
 
 namespace ClaimFlow.Web.Services

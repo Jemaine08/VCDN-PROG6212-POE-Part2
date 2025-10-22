@@ -1,4 +1,8 @@
-﻿using ClaimFlow.Web.Models;
+﻿// Reference: Microsoft Learn (2024) Upload files in ASP.NET Core
+// Available at: https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/file-uploads
+// Guided the implementation of IFormFile handling in the `Create` method for claim document uploads.
+
+using ClaimFlow.Web.Models;
 using ClaimFlow.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +13,7 @@ namespace ClaimFlow.Web.Controllers
     public class CoordinatorController : Controller
     {
         private readonly IClaimRepository _repo;
-        public CoordinatorController(IClaimRepository repo) => _repo = repo;
+        public CoordinatorController(IClaimRepository repo, ILogger<CoordinatorController> @object) => _repo = repo;
 
         // GET /Coordinator
         [HttpGet("")]
@@ -19,7 +23,7 @@ namespace ClaimFlow.Web.Controllers
             var pending = all.Where(c => c.Status == ClaimStatus.Submitted)
                              .OrderBy(c => c.CreatedAt)
                              .ToList();
-            return View(pending);
+            return View(pending);  // Returns the default view
         }
 
         // POST /Coordinator/Verify

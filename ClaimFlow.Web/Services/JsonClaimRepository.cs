@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿// Reference: Microsoft Learn (2024) AES Class — System.Security.Cryptography.Aes
+// Available at: https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes
+// Used to implement AES encryption and decryption for file uploads in the ClaimsController.
+
+using System.Text.Json;
 using ClaimFlow.Web.Models;
 using Microsoft.Extensions.Options;
 

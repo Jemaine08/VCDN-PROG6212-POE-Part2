@@ -1,4 +1,8 @@
-﻿using ClaimFlow.Web.Models;
+﻿// Reference: Microsoft Learn (2024) ASP.NET Core Controllers and Actions
+// Available at: https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/actions
+// Used to guide the structure of controller actions like Verify and Reject.
+
+using ClaimFlow.Web.Models;
 using ClaimFlow.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
